@@ -6,7 +6,9 @@ import { useAuth } from '../../hooks/useAuth';
 export const OTPForm = () => {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
+  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [upi, setUpi] = useState('');
   const [step, setStep] = useState(1); // 1: request OTP, 2: verify OTP
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -41,7 +43,7 @@ export const OTPForm = () => {
     setError('');
 
     try {
-      const response = await authService.requestOTP(phone);
+      const response = await authService.requestOTP(phone, email, upi);
       setDemoOTP(response.data.demoOTP); // For demo
       setStep(2);
     } catch (err) {
@@ -57,7 +59,7 @@ export const OTPForm = () => {
     setError('');
 
     try {
-      const response = await authService.verifyOTP(phone, otp, name, location);
+      const response = await authService.verifyOTP(phone, otp, name, location, upi, email);
       login(response.data.token, response.data.user);
       navigate('/dashboard');
     } catch (err) {
@@ -86,6 +88,27 @@ export const OTPForm = () => {
                 required
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email (for OTP)</label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">UPI id (optional)</label>
+              <input
+                type="text"
+                placeholder="yourname@bank"
+                value={upi}
+                onChange={(e) => setUpi(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
             <button
               type="submit"
               disabled={loading}
@@ -105,6 +128,27 @@ export const OTPForm = () => {
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                 required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">UPI id (optional)</label>
+              <input
+                type="text"
+                placeholder="yourname@bank"
+                value={upi}
+                onChange={(e) => setUpi(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
             <div>

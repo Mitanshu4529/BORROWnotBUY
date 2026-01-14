@@ -25,6 +25,17 @@ cp .env.example .env
 npm run dev
 ```
 
+If you want email OTPs in development or production, set these environment variables in `backend/.env`:
+
+```
+EMAIL_HOST=smtp.example.com
+EMAIL_PORT=587
+EMAIL_SECURE=false
+EMAIL_USER=your-smtp-user
+EMAIL_PASS=your-smtp-pass
+EMAIL_FROM="Borrow Not Buy <no-reply@example.com>"
+```
+
 **Server runs on:** `http://localhost:5000`
 
 ### Frontend Setup
